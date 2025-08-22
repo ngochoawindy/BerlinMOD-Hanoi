@@ -5,11 +5,12 @@
  *
  * Usage (psql):
  *   \i berlinmod_export_kepler.sql
- *   SELECT export_kepler('/tmp/trips_kepler/');
+ *   SELECT export_trips('/tmp/trips_kepler/');
+ *   SELECT export_municipalities('tmp/trips_kepler');
  *****************************************************************************/
 
-DROP FUNCTION IF EXISTS export_kepler(fullpath text);
-CREATE OR REPLACE FUNCTION export_kepler(fullpath text)
+DROP FUNCTION IF EXISTS export_trips(fullpath text);
+CREATE OR REPLACE FUNCTION export_trips(fullpath text)
 RETURNS text AS $$
 DECLARE
   startTime timestamptz;
@@ -29,12 +30,9 @@ BEGIN
   IF fullpath IS NULL OR btrim(fullpath) = '' THEN
     RAISE EXCEPTION 'Output directory cannot be empty';
   END IF;
-
-  -- Normalize to end with a single slash
+  
   dir := regexp_replace(fullpath, '/+$', '');
   dir := dir || '/';
-
-  -- Check directory is accessible (throws if not)
   PERFORM 1 FROM pg_ls_dir(dir) LIMIT 1;
 
   -- Loop over all trips; create one file per trip
@@ -87,9 +85,7 @@ BEGIN
         ))::text
         FROM features
       ) TO %L
-    $q$, r.tripid, outpath);
-
-    RAISE INFO 'Exported trip % to %', r.tripid, outpath;
+    $q$, r.tripid, outpath);    
   END LOOP;
 
   endTime := clock_timestamp();
@@ -102,3 +98,65 @@ BEGIN
   RETURN 'OK';
 END;
 $$ LANGUAGE plpgsql;
+
+-- Export Municipalities
+DROP FUNCTION IF EXISTS export_municipalities(fullpath text, srid_out int);
+CREATE OR REPLACE FUNCTION export_municipalities(
+  fullpath  text,
+  srid_out  int DEFAULT 4326
+)
+RETURNS text
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  startTime timestamptz;
+  endTime   timestamptz;
+  dir       text;
+  outpath   text;
+BEGIN
+  startTime := clock_timestamp();
+  RAISE INFO '------------------------------------------------------------------';
+  RAISE INFO 'Exporting Municipalities to GeoJSON';
+  RAISE INFO '------------------------------------------------------------------';
+  RAISE INFO 'Execution started at %', startTime;
+  RAISE INFO 'Output directory: %', fullpath;
+  RAISE INFO '------------------------------------------------------------------';
+
+  dir := regexp_replace(fullpath, '/+$', '') || '/'; 
+  PERFORM 1 FROM pg_ls_dir(dir) LIMIT 1; 
+  outpath := dir || 'municipalities.geojson'; 
+  EXECUTE format($Q$ 
+    COPY ( 
+      SELECT ( 
+        jsonb_build_object( 
+          'type','FeatureCollection', 'features', 
+          jsonb_agg( 
+            jsonb_build_object( 'type','Feature', 'properties', 
+            jsonb_build_object( 
+              'MunicipalityName', m.MunicipalityName, 
+              'Population', m.Population, 
+              'PopDensityKm2', m.PopDensityKm2 
+              ), 
+              'geometry', ST_AsGeoJSON( 
+                ST_Transform( 
+                  m.MunicipalityGeo, 
+                  %s 
+                ) 
+              )::jsonb 
+            ) 
+          ) 
+        ) 
+      )::text 
+    FROM Municipalities m ) 
+  TO %L $Q$, srid_out, outpath);
+
+  endTime := clock_timestamp();
+  RAISE INFO '------------------------------------------------------------------';
+  RAISE INFO 'Execution started at %', startTime;
+  RAISE INFO 'Execution finished at %', endTime;
+  RAISE INFO 'Execution time %', endTime - startTime;
+  RAISE INFO '------------------------------------------------------------------';
+
+  RETURN format('Exported Municipalities to %s', outpath);
+END;
+$$;
