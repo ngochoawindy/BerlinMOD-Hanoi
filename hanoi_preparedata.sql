@@ -54,23 +54,14 @@ DELETE FROM RoadSegments WHERE SourceNode IS NULL OR TargetNode IS NULL;
 
 CREATE INDEX RoadSegments_SegmentGeo_gist_idx ON RoadSegments USING gist(SegmentGeo);
 
-/*
--- The following were obtained FROM the OSM file extracted on March 26, 2023
-SELECT COUNT(*) FROM RoadSegments;
--- 95025
-SELECT COUNT(*) FROM Nodes;
--- 80304
-*/
-
 -------------------------------------------------------------------------------
 -- Get municipalities data to define home and work regions
 -------------------------------------------------------------------------------
 
 -- Hanoi's municipalities data from the following sources
 -- https://en.wikipedia.org/wiki/Hanoi#Administrative_divisions
--- https://www.nso.gov.vn/en/px-web/?pxid=E0529&theme=Enterprise total number of enterprises: 150522
--- Note that "Tỉnh Sơn Tây" in osm data combines both "Ba Vì District" and "Sơn Tây Town" from wiki
--- For this reason, we update the population of Tỉnh Sơn Tây as sum of 2 components above.
+-- https://www.nso.gov.vn/en/px-web/?pxid=E0529&theme=Enterprise 
+-- Total number of enterprises in 2022: 150522
 
 DROP TABLE IF EXISTS Municipalities;
 CREATE TABLE Municipalities(MunicipalityId int PRIMARY KEY, 
@@ -78,7 +69,7 @@ CREATE TABLE Municipalities(MunicipalityId int PRIMARY KEY,
   PopDensityKm2 int, NoEnterp int, PercEnterp float);
 INSERT INTO Municipalities VALUES
 (1,'Quận Ba Đình',223100,0.03,24224,3981,0.03),
-(2,'Quận Bắc Từ Liêm',359200,0.05,7938,6409,0.05),
+(2,'Quận Bắc Từ Liêm',359200,0.04,7938,6409,0.05),
 (3,'Quận Cầu Giấy',294500,0.03,23788,5255,0.03),
 (4,'Quận Đống Đa',377900,0.04,37980,6743,0.04),
 (5,'Quận Hà Đông',435500,0.05,8773,7771,0.05),
@@ -89,23 +80,24 @@ INSERT INTO Municipalities VALUES
 (10,'Quận Nam Từ Liêm',290500,0.03,9030,5184,0.03),
 (11,'Quận Tây Hồ',166600,0.02,6834,2973,0.02),
 (12,'Quận Thanh Xuân',293400,0.03,31996,5235,0.03),
-(13,'Tỉnh Sơn Tây',464100,0.06,861,08281,0.06),
-(14,'Huyện Chương Mỹ',351200,0.04,1479,6267,0.04),
-(15,'Huyện Đan Phượng',186100,0.02,2391,3321,0.02),
-(16,'Huyện Đông Anh',411700,0.05,2217,7346,0.05),
-(17,'Huyện Gia Lâm',299800,0.04,2570,5250,0.04),
-(18,'Huyện Hoài Đức',282300,0.03,3324,5037,0.03),
-(19,'Huyện Mê Linh',254400,0.03,1801,4539,0.03),
-(20,'Huyện Mỹ Đức',210200,0.02,929,3751,0.02),
-(21,'Huyện Phú Xuyên',231900,0.03,1336,4138,0.03),
-(22,'Huyện Phúc Thọ',195300,0.02,1648,3485,0.02),
-(23,'Huyện Quốc Oai',204400,0.02,1352,3647,0.02),
-(24,'Huyện Sóc Sơn', 361200,0.04,1182,6445,0.04),
-(25,'Huyện Thạch Thất',226000,0.03,1205,4033,0.03),
-(26,'Huyện Thanh Oai',225900,0.03,1815,4031,0.03),
-(27,'Huyện Thanh Trì',294100,0.03,4632,5248,0.03),
-(28,'Huyện Thường Tín',263800,0.03,2027,4707,0.03),
-(29,'Huyện Ứng Hòa',215900,0.03,1147,3852,0.03);
+(13,'Thị xã Sơn Tây',156500,0.02,1335,2793,0.02),
+(14,'Huyện Ba Vì',307600,0.04,729,5489,0.04),
+(15,'Huyện Chương Mỹ',351200,0.04,1479,6267,0.04),
+(16,'Huyện Đan Phượng',186100,0.02,2391,3321,0.02),
+(17,'Huyện Đông Anh',411700,0.05,2217,7346,0.05),
+(18,'Huyện Gia Lâm',299800,0.04,2570,5250,0.04),
+(19,'Huyện Hoài Đức',282300,0.03,3324,5037,0.03),
+(20,'Huyện Mê Linh',254400,0.03,1801,4539,0.03),
+(21,'Huyện Mỹ Đức',210200,0.02,929,3751,0.02),
+(22,'Huyện Phú Xuyên',231900,0.03,1336,4138,0.03),
+(23,'Huyện Phúc Thọ',195300,0.02,1648,3485,0.02),
+(24,'Huyện Quốc Oai',204400,0.02,1352,3647,0.02),
+(25,'Huyện Sóc Sơn', 361200,0.04,1182,6445,0.04),
+(26,'Huyện Thạch Thất',226000,0.03,1205,4033,0.03),
+(27,'Huyện Thanh Oai',225900,0.03,1815,4031,0.03),
+(28,'Huyện Thanh Trì',294100,0.03,4632,5248,0.03),
+(29,'Huyện Thường Tín',263800,0.03,2027,4707,0.03),
+(30,'Huyện Ứng Hòa',215900,0.03,1147,3852,0.03);
 
 
 ALTER TABLE Municipalities ADD COLUMN MunicipalityGeo geometry;
