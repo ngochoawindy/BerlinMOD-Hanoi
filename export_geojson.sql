@@ -4,9 +4,8 @@
  * Geometry is a LineString with coordinates [lon, lat, 0, epoch_ts]
  *
  * Usage (psql):
- *   \i berlinmod_export_kepler.sql
  *   SELECT export_trips('/tmp/trips_kepler/');
- *   SELECT export_municipalities('tmp/trips_kepler');
+ *   SELECT export_municipalities('/tmp/trips_kepler/');
  *****************************************************************************/
 
 DROP FUNCTION IF EXISTS export_trips(fullpath text);
