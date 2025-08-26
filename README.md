@@ -6,6 +6,12 @@
 
 This repository adapts the [BerlinMOD benchmark](https://github.com/MobilityDB/MobilityDB-BerlinMOD) to **Hanoi (Vietnam)** using **OSM data** and MobilityDB.  
 It provides tools to generate synthetic mobility datasets, convert them into GeoJSON, and visualize them with [**Kepler.gl**](https://kepler.gl/) or **QGIS** + [**MOVE plugin**](https://github.com/MobilityDB/move).
+
+Visualization with Kepler ![trip](https://github.com/user-attachments/assets/148146c4-a882-4051-a0be-cddef9bc37a5)
+<img width="1701" height="860" alt="Image" src="https://github.com/user-attachments/assets/7df390f4-0024-453c-b54d-5e2e535fcadf" />
+
+Visualization with QGIS + MobilityDB-MOVE plugin
+<img width="1915" height="1017" alt="Image" src="https://github.com/user-attachments/assets/427bdcd7-4d9b-43fd-b139-6515b5ef6469" />
 ---
 
 ## 1. Getting the OSM Map of Hanoi
@@ -63,7 +69,7 @@ We provide SQL functions to export municipalities/trips as GeoJSON for Kepler.gl
 ```bash
 psql -h localhost -p 5432 -U dbowner -d hanoi -f export_geojson.sql
 psql -h localhost -p 5432 -U dbowner -d hanoi \
--c 'SELECT export_trips('path')'
+-c 'SELECT export_trip('path', tripID)'
 # Get all trip_<tripId>.geojson files 
 psql -h localhost -p 5432 -U dbowner -d hanoi \
 -c 'SELECT export_municipalities('path')'
