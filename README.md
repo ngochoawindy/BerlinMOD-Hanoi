@@ -14,6 +14,7 @@ Visualization of a trip:
   <img src="https://github.com/user-attachments/assets/427bdcd7-4d9b-43fd-b139-6515b5ef6469" width="800" />
 
 Visualization of municipalities in Hanoi with Kepler:  
+
 <img src="https://github.com/user-attachments/assets/7df390f4-0024-453c-b54d-5e2e535fcadf" width="800" />
 
 ---
@@ -61,8 +62,6 @@ psql -h localhost -p 5432 -U dbowner -d hanoi -f hanoi_preparedata.sql
 Then execute generator of BerlinMOD to get synthetic data for Hanoi: 
 ```bash
 psql -h localhost -p 5432 -U dbowner -d hanoi -f MobilityDB-BerlinMOD/BerlinMOD/berlinmod_datagenerator.sql
-# adds the pgplsql functions of the simulation to the database
-
 psql -h localhost -p 5432 -U dbowner -d hanoi \
 -c 'select berlinmod_generate(scaleFactor := 0.005)'
 #generate data with a specific scale
@@ -74,7 +73,7 @@ We provide SQL functions to export municipalities/trips as GeoJSON for Kepler.gl
 psql -h localhost -p 5432 -U dbowner -d hanoi -f export_geojson.sql
 psql -h localhost -p 5432 -U dbowner -d hanoi \
 -c 'SELECT export_trip('path', tripID)'
-# Get all trip_<tripId>.geojson files 
+# Get trip_<tripId>.geojson file
 psql -h localhost -p 5432 -U dbowner -d hanoi \
 -c 'SELECT export_municipalities('path')'
 # Get municipalities.geojson
