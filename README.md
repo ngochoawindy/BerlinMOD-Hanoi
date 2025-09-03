@@ -5,17 +5,15 @@
 This repository adapts the [BerlinMOD benchmark](https://github.com/MobilityDB/MobilityDB-BerlinMOD) to **Hanoi (Vietnam)** using **OSM data** and MobilityDB.  
 It provides tools to generate synthetic mobility datasets, convert them into GeoJSON, and visualize them with [**Kepler.gl**](https://kepler.gl/) or **QGIS** + [**MOVE plugin**](https://github.com/MobilityDB/move).
 
-Visualization of a trip:
+- Visualization with Kepler:
+  - Trips:  
+  <img src="https://github.com/user-attachments/assets/477ac0c9-798a-4492-bb37-24d276074f4a" width="800"/>
 
-- With Kepler  
-  <img src="https://github.com/user-attachments/assets/148146c4-a882-4051-a0be-cddef9bc37a5" width="800" />
-
-- With QGIS + MobilityDB-Move  
+  - Municipalities:
+  <img src="https://github.com/user-attachments/assets/7df390f4-0024-453c-b54d-5e2e535fcadf" width="800" />
+  
+- Visulaization with QGIS + MobilityDB-Move  
   <img src="https://github.com/user-attachments/assets/427bdcd7-4d9b-43fd-b139-6515b5ef6469" width="800" />
-
-Visualization of municipalities in Hanoi with Kepler:  
-
-<img src="https://github.com/user-attachments/assets/7df390f4-0024-453c-b54d-5e2e535fcadf" width="800" />
 
 ---
 
@@ -66,14 +64,14 @@ psql -h localhost -p 5432 -U dbowner -d hanoi \
 -c 'select berlinmod_generate(scaleFactor := 0.005)'
 #generate data with a specific scale
 ```
-## 3. Exporting Geojson for visualization with keple.gl
+## 3. Exporting GeoJSON for visualization with Kepler.gl
 We provide SQL functions to export municipalities/trips as GeoJSON for Kepler.gl: 
 
 ```bash
 psql -h localhost -p 5432 -U dbowner -d hanoi -f export_geojson.sql
 psql -h localhost -p 5432 -U dbowner -d hanoi \
--c 'SELECT export_trip('path', tripID)'
-# Get trip_<tripId>.geojson file
+-c 'SELECT export_trip('path', 'date')'
+# Get trip_<date>.geojson file
 psql -h localhost -p 5432 -U dbowner -d hanoi \
 -c 'SELECT export_municipalities('path')'
 # Get municipalities.geojson
@@ -87,6 +85,6 @@ psql -h localhost -p 5432 -U dbowner -d hanoi \
 | SF 0.05 |   447 | 8 |  9,491 | [hanoi_sf0.05.zip](https://drive.google.com/file/d/1SuLZ8B4SrA6JD2CiaxxGRLoUCg_Z97SY/view?usp=drive_link) | 626.6 MB |
 | SF 0.1  |   632 | 11 | 18,910 | [hanoi_sf0.1.zip](https://drive.google.com/file/d/1lniEu0w5uM9yK52TmGVfeN9se9vjoUXz/view?usp=drive_link) | 1.27 GB |
 
-Trips geojson files: [trips.zip](https://drive.google.com/file/d/1KIw2O3msoOyIKR_EiLxXIjwezGy9XPgd/view?usp=drive_link) (There are 2903 files corresponding to 2903 trips for scale 0.01)
+Trips geoJSON file: [trips_2020-06-01.geojson](https://drive.google.com/file/d/13n2_WMmS5sum-sgY-HPAuZjhF5F908_M/view?usp=sharing) (All synthetic trips in Hanoi in 2020-06-01 with scale of 0.001)
 
-Municipalities geojson files: [municipalities.geojson](https://drive.google.com/file/d/1ZYZuM68nFPreFsfChoqeaN8n2sziB2-s/view?usp=drive_link)
+Municipalities geoJSON file: [municipalities.geojson](https://drive.google.com/file/d/1ZYZuM68nFPreFsfChoqeaN8n2sziB2-s/view?usp=drive_link)
