@@ -7,7 +7,7 @@ It provides tools to generate synthetic mobility datasets, convert them into Geo
 
 - Visualization with Kepler:
   - Trips:  
-  <img src="https://github.com/user-attachments/assets/477ac0c9-798a-4492-bb37-24d276074f4a" width="800"/>
+  <img src="https://github.com/user-attachments/assets/5076f49c-63a9-42be-a5b6-c6c2dd11b785" width="800"/>
 
   - Municipalities:
   <img src="https://github.com/user-attachments/assets/7df390f4-0024-453c-b54d-5e2e535fcadf" width="800" />
