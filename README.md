@@ -80,11 +80,11 @@ psql -h localhost -p 5432 -U dbowner -d hanoi \
 
 | Scale Factor | Vehicles | Days | Trips | File | Size |
 |--------------|---------:|-----:|------:|-----|-----:|
-| SF 0.01 |   200 | 5 |  2,903 | [hanoi_sf0.01.zip](https://drive.google.com/file/d/1qOBRVbmd_15F2zt8iBbAgLIrU6NsNdaV/view?usp=drive_link) | 214.6 MB |
-| SF 0.02 |   283 | 6 |  4,641 | [hanoi_sf0.02.zip](https://drive.google.com/file/d/1G1HOqh4_WZcM1FxXXfqZSHwdb98dvzLi/view?usp=drive_link) | 310.4 MB |
-| SF 0.05 |   447 | 8 |  9,491 | [hanoi_sf0.05.zip](https://drive.google.com/file/d/1SuLZ8B4SrA6JD2CiaxxGRLoUCg_Z97SY/view?usp=drive_link) | 626.6 MB |
-| SF 0.1  |   632 | 11 | 18,910 | [hanoi_sf0.1.zip](https://drive.google.com/file/d/1lniEu0w5uM9yK52TmGVfeN9se9vjoUXz/view?usp=drive_link) | 1.27 GB |
+| SF 0.01 |   200 | 5 |  2,903 | [hanoi_sf0.01.zip](https://drive.google.com/file/d/1RArXgQXg3uz7I-zSxJs0_NpyQEOLmP02/view?usp=drive_link) | 214.6 MB |
+| SF 0.02 |   283 | 6 |  4,641 | [hanoi_sf0.02.zip](https://drive.google.com/file/d/1dqubMjWCY_EsTs7yega5zhSSVGk8cmYS/view?usp=drive_link) | 310.4 MB |
+| SF 0.05 |   447 | 8 |  9,491 | [hanoi_sf0.05.zip](https://drive.google.com/file/d/1Qxde4sn85d773PBLMLnI7WZeF4z2X_3B/view?usp=drive_link) | 626.6 MB |
+| SF 0.1  |   632 | 11 | 18,910 | [hanoi_sf0.1.zip](https://drive.google.com/file/d/1LvNxDHbTmXHfALpuJzLOCuN8VUj3sOua/view?usp=drive_link) | 1.27 GB |
 
-Trips geoJSON file: [trips_2020-06-01.geojson](https://drive.google.com/file/d/13n2_WMmS5sum-sgY-HPAuZjhF5F908_M/view?usp=sharing) (All synthetic trips in Hanoi in 2020-06-01 with scale of 0.001)
+Trips geoJSON file: [trips_2020-06-01.geojson](https://drive.google.com/file/d/1ufBxG5fxA3d3GZpcf2ZTmUjn6rGfhjoE/view?usp=drive_link) (All synthetic trips in Hanoi in 2020-06-01 with scale of 0.001)
 
-Municipalities geoJSON file: [municipalities.geojson](https://drive.google.com/file/d/1ZYZuM68nFPreFsfChoqeaN8n2sziB2-s/view?usp=drive_link)
+Municipalities geoJSON file: [municipalities.geojson](https://drive.google.com/file/d/10YK6LVMHq6SvcPvQMuQqQGsm42FOFnYD/view?usp=drive_link)
